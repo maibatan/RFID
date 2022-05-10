@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="PCApp.Views.Inventories.DetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PCApp.Views.Inventories"
+             mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:converter="clr-namespace:PCApp.Converters" 
+             xmlns:inventories="clr-namespace:PCApp.ViewModels.Inventories" 
+             d:DataContext="{d:DesignInstance Type=inventories:DetailViewModel}">
+    <UserControl.Resources>
+        <converter:ListViewIndexConvert  x:Key="ListViewIndex"/>
+        <converter:StatusConvert  x:Key="StatusConvert"/>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding DetailViewCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="1" Background="#121432" Height="70" Margin="10 10 10 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="2"  Style="{StaticResource style_button_printall}" Command="{Binding PrintCommand}"/>
+        </Grid>
+        <Border Grid.Row="2" BorderBrush="Silver" BorderThickness="0.7" CornerRadius="0 0 15 15" Margin="10 0 10 10">
+            <StackPanel>
+                <TextBlock Grid.Column="0" Text="{Binding Inventory.Description,Mode=TwoWay}" VerticalAlignment="Center" Margin="20" FontSize="24" Foreground="Black" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="0" Text="{Binding Inventory.Status, Converter={StaticResource StatusConvert}}" VerticalAlignment="Center" Margin="20" FontSize="20" Foreground="Black" FontWeight="SemiBold"/>
+                <ListView ItemsSource="{Binding ListDetail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource ListViewIndex}}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="NO" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding AssetItemNavigation.DisplayName}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Item Name" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding ExpectedQuality}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Expected Quality" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding PhysicalQuality}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Physical Quality" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+            
+        </Border>
+        <Grid Grid.Row="3">
+            <ProgressBar IsIndeterminate="True" Visibility="{Binding ProgressBarEnable}"/>
+        </Grid>
+    </Grid>
+</UserControl>

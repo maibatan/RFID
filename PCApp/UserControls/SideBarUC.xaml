@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="PCApp.UserControls.SideBarUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:PCApp.UserControls" 
+             xmlns:viewmodels="clr-namespace:PCApp.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+             mc:Ignorable="d" 
+             >
+    <Border BorderThickness="0 0 1 0" BorderBrush="gray">
+        <Grid Background="white" MinWidth="220">
+            <ScrollViewer Style="{StaticResource for_scrollviewer}">
+                <StackPanel >
+                    <TextBlock Padding="10">
+                    <Image Source="pack://application:,,,/Images/logo.png" Width="250"/>
+                    </TextBlock>
+
+                   
+                    <Expander Foreground="#C54738" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock FontSize="18">Inventory Report</TextBlock>
+                        </Expander.Header>
+                        <StackPanel>
+                            <RadioButton GroupName="Menu" Content="Create Inventory Report" Style="{StaticResource MenuButtonTheme}" Command="{Binding NewInventoryViewCommand}"/>
+                            <RadioButton GroupName="Menu" Content="List Inventory Report" Style="{StaticResource MenuButtonTheme}" Command="{Binding InventoryViewCommand}"/>
+                        </StackPanel>
+                    </Expander>
+
+
+                </StackPanel>
+            </ScrollViewer>
+
+
+
+
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="2"
+    android:rowCount="3"
+    tools:ignore="HardcodedSize,ContentDescription,MissingDimension" >
+         <ImageView
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:id="@+id/img_btn_register_instance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_add_circle_outline_24"
+         />
+        <ImageView
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:id="@+id/img_btn_create_inventory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_add_chart_24"
+        />
+         <ImageView
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:id="@+id/img_btn_inventories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_insert_chart_outlined_24"/>
+        <ImageView
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:id="@+id/img_btn_configuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_settings_24"/>
+       
+        <ImageView
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        />
+        <ImageView
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+</GridLayout>

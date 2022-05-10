@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                 
+                    xmlns:inventoryView="clr-namespace:PCApp.Views.Inventories"
+                    xmlns:inventoryViewModel="clr-namespace:PCApp.ViewModels.Inventories">
+
+
+ 
+    <DataTemplate DataType="{x:Type inventoryViewModel:InventoryViewModel}">
+        <inventoryView:InventoryView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type inventoryViewModel:NewInventoryViewModel}">
+        <inventoryView:NewInventoryView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type inventoryViewModel:DetailViewModel}">
+        <inventoryView:DetailView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type inventoryViewModel:NewDetailViewModel}">
+        <inventoryView:NewDetailView/>
+    </DataTemplate>
+</ResourceDictionary>

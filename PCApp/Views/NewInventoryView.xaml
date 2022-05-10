@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="PCApp.Views.Inventories.NewInventoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PCApp.Views.Inventories"
+             mc:Ignorable="d" 
+             xmlns:converter="clr-namespace:PCApp.Converters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             Padding="25" Background="White">
+    <UserControl.Resources>
+        <converter:InventoryTypeConvert x:Key="InventoryTypeConvertKey"/>
+        <converter:ListViewIndexConvert  x:Key="ListViewIndex"/>
+    </UserControl.Resources>
+    <Grid Width="600">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Create Inventory" Margin="17 7 7 7" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+        <StackPanel Grid.Row="1">
+            <TextBox 
+                 FontSize="16"
+                 Text="{Binding InventoryName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                 materialDesign:HintAssist.Hint="Tên phiếu"/>
+            <ListView ItemsSource="{Binding ListDetail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Padding" Value="0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource ListViewIndex}}">
+                            <GridViewColumn.Header>
+                                <TextBlock Text="NO" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding AssetItemNavigation.DisplayName}">
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Item Name" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding ExpectedQuality}">
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Expected Quality" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Content="Add" Command="{Binding AddCommand}" Margin="10"/>
+            <Button Content="Save" Command="{Binding SaveCommand}" Margin="10"/>
+
+        </StackPanel>
+    </Grid>
+</UserControl>
