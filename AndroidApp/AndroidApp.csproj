@@ -79,10 +79,8 @@
     <Compile Include="Activities\InventoriesActivity.cs" />
     <Compile Include="Activities\DetailsActivity.cs" />
     <Compile Include="Activities\MenuActivity.cs" />
-    <Compile Include="Activities\CreateInventoryActivity.cs" />
     <Compile Include="Activities\ScanInventoryActivity.cs" />
     <Compile Include="Activities\RegisterInstanceActivity.cs" />
-    <Compile Include="Adapters\ExpectedDetailAdapter.cs" />
     <Compile Include="Adapters\InventoryAdapter.cs" />
     <Compile Include="Adapters\DetailAdapter.cs" />
     <Compile Include="Adapters\ScanDetailAdapter.cs" />
@@ -215,11 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\expected_detail_item.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_create_inventory.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

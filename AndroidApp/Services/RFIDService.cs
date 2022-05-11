@@ -24,9 +24,9 @@ namespace AndroidApp.Services
         #endregion
         #region Methods
         [Obsolete]
-        public  static void InitializeReader()
+        public  static Task InitializeReader()
         {
-            Task.Factory.StartNew(() =>
+           return Task.Factory.StartNew(() =>
             {
                 for (var i = 1; i <= 3; i++)
                 {

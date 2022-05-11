@@ -11,15 +11,14 @@ namespace AndroidApp.Activities
     public class MenuActivity : AppCompatActivity
     {
         private ImageView _iventoryButton;
-        private ImageView _createInventoryButton;
         private ImageView _registerInstanceButton;
         private ImageView _configurationButton;
 
         [Obsolete]
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            RFIDService.InitializeReader();
+            await RFIDService.InitializeReader();
             SetContentView(Resource.Layout.activity_menu);
             OnBindView();
 
@@ -28,8 +27,6 @@ namespace AndroidApp.Activities
         {
             _iventoryButton = FindViewById<ImageView>(Resource.Id.img_btn_inventories);
             _iventoryButton.Click += CheckInventories;
-            _createInventoryButton = FindViewById<ImageView>(Resource.Id.img_btn_create_inventory);
-            _createInventoryButton.Click += CreateInventory;
             _registerInstanceButton = FindViewById<ImageView>(Resource.Id.img_btn_register_instance);
             _registerInstanceButton.Click += RegisterInstance;
             _configurationButton = FindViewById<ImageView>(Resource.Id.img_btn_configuration);
@@ -42,11 +39,7 @@ namespace AndroidApp.Activities
             Intent intent = new Intent(this, typeof(InventoriesActivity));
             StartActivity(intent);
         }
-        private void CreateInventory(object sender,EventArgs e)
-        {
-            Intent intent = new Intent(this, typeof(CreateInventoryActivity));
-            StartActivity(intent);
-        }
+        
         private void RegisterInstance(object sender, EventArgs e)
         {
             Intent intent = new Intent(this, typeof(RegisterInstanceActivity));

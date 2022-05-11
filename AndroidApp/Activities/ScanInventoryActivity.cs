@@ -78,10 +78,7 @@ namespace AndroidApp.Activities
         [Obsolete]
         private void Scan(object sender, EventArgs e)
         {
-            AddTagIdToList("011111");
-            AddTagIdToList("011112");
-            AddTagIdToList("011113");
-            AddTagIdToList("011114");
+            
             RFIDService.StartScan(this);
             if (RFIDService.IsRun)
             {

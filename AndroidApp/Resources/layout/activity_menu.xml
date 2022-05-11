@@ -16,15 +16,6 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_baseline_add_circle_outline_24"
          />
-        <ImageView
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:id="@+id/img_btn_create_inventory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_add_chart_24"
-        />
          <ImageView
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
