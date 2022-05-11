@@ -25,7 +25,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{DynamicResource ADD_NEW}" Margin="17 7 7 7" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
         <StackPanel Grid.Row="1">
 
             <StackPanel Orientation="Horizontal"/>

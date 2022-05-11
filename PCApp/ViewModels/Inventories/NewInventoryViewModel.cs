@@ -35,25 +35,24 @@ namespace PCApp.ViewModels.Inventories
             _listDetail = new ObservableCollection<Detail>();
             SaveDetailCommand = new RelayCommand<object>((p) =>{return true;}, async (p) =>
             {
-                if (_inventoryDescription == "")
+                if (string.IsNullOrWhiteSpace(_inventoryDescription) == false)
                 {
-                    new MsgBox("Must have decription ", MessageType.Warning, MessageButtons.Ok).ShowDialog();
-                    return;
+                    if (_listDetail.Count > 0)
+                    {
+                        int id = await PostInventoryAsync(_inventoryDescription);
+                        if (id == 0)
+                        {
+                            new MsgBox("Can't create inventory ", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                            return;
+                        }
+                        await PostDetailsAsync(id, _listDetail);
+                        Clear();
+                        (Application.Current.MainWindow.DataContext as MainViewModel).CurrentView = new InventoryViewModel();
+                    }
+                    else new MsgBox("Must have details ", MessageType.Warning, MessageButtons.Ok).ShowDialog();
                 }
-                if (_listDetail.Count == 0)
-                {
-                    new MsgBox("Must have details ", MessageType.Warning, MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-                int id= await PostInventoryAsync(_inventoryDescription);
-                if(id == 0)
-                {
-                    new MsgBox("Can't create inventory ", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-                await PostDetailsAsync(id, _listDetail);
-                Clear();
-                (Application.Current.MainWindow.DataContext as MainViewModel).CurrentView = new InventoryViewModel();
+                else new MsgBox("Must have decription ", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+                
             });
             AddDetailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {

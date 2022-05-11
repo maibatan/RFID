@@ -49,6 +49,7 @@ namespace PCApp.ViewModels.Inventories
             {
                 (Application.Current.MainWindow.DataContext as MainViewModel).CurrentView = new DetailViewModel(id);
             });
+
         }
         private async Task DeleteAsync(int id)
         {

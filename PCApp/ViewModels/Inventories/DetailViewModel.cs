@@ -1,9 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿
+using Microsoft.Win32;
+using Newtonsoft.Json;
+using OfficeOpenXml;
 using PCApp.Helpers;
 using PCApp.Popup;
 using SharedLibrary;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,10 +25,6 @@ namespace PCApp.ViewModels.Inventories
         private Visibility _ProgressBarEnable = Visibility.Hidden;
         public Visibility ProgressBarEnable { get { return _ProgressBarEnable; } set { _ProgressBarEnable = value; OnPropertyChanged(); } }
         public ICommand DetailViewCommand { get; set; }
-        public ICommand DeleteCommand { get; set; }
-        public ICommand EditCommand { get; set; }
-        public ICommand AddCommand { get; set; }
-        public ICommand SaveCommad { get; set; }
         public ICommand PrintCommand { get; set; }
         public DetailViewModel(int id)
         {
@@ -33,6 +33,21 @@ namespace PCApp.ViewModels.Inventories
                 ProgressBarEnable = Visibility.Visible;
                 await LoadDataAsync(id);
                 ProgressBarEnable = Visibility.Hidden;
+            });
+            PrintCommand = new RelayCommand<Window>((p) => { return true; }, async(p) =>
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Title = "Export Excel";
+                saveFileDialog.Filter = "Excel (*.xlsx)|*.xlsx|Excel 2003 (*.xls)|*.xls";
+                var result = saveFileDialog.ShowDialog();
+                if((bool)result)
+                {
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    var file = new FileInfo(saveFileDialog.FileName);
+                    await ExcelFile.Export(file, _inventory, _listDetail);
+                    new MsgBox("Save successful! ", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                }
+                
             });
         }
         private async Task LoadDataAsync(int id)

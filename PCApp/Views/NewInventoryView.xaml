@@ -17,17 +17,17 @@
 
     <Grid Width="600">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Create Inventory" Margin="17 7 7 7" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-        <StackPanel Grid.Row="1">
+
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Create Inventory" Margin="17 7 7 7" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
             <TextBox 
                  FontSize="16"
                  Text="{Binding InventoryDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                  Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                 materialDesign:HintAssist.Hint="Tên phiếu"/>
+                 materialDesign:HintAssist.Hint="Description"/>
             <ListView ItemsSource="{Binding ListDetail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
@@ -73,7 +73,7 @@
                 </ListView.View>
             </ListView>
         </StackPanel>
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Button Content="Clear" Command="{Binding ClearCommand}" Margin="10"/>
             <Button Content="Add" Command="{Binding AddDetailCommand}" Margin="10"/>
             <Button Content="Save" Command="{Binding SaveDetailCommand}" Margin="10"/>
