@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:PCApp.Views.Inventories"
              mc:Ignorable="d" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:converter="clr-namespace:PCApp.Converters" xmlns:inventories="clr-namespace:PCApp.ViewModels.Inventories" d:DataContext="{d:DesignInstance Type=inventories:InventoryViewModel}">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:converter="clr-namespace:PCApp.Converters" 
+             xmlns:inventories="clr-namespace:PCApp.ViewModels.Inventories" 
+             d:DataContext="{d:DesignInstance Type=inventories:InventoryViewModel}">
     <UserControl.Resources>
         <converter:ListViewIndexConvert  x:Key="ListViewIndex"/>
         <converter:StatusConvert  x:Key="StatusConvert"/>

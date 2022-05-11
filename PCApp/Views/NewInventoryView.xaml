@@ -5,14 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PCApp.Views.Inventories"
              mc:Ignorable="d" 
-             xmlns:converter="clr-namespace:PCApp.Converters"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:converter="clr-namespace:PCApp.Converters" 
+             xmlns:inventories="clr-namespace:PCApp.ViewModels.Inventories" 
+             d:DataContext="{d:DesignInstance Type=inventories:NewInventoryViewModel}"
              Padding="25" Background="White">
     <UserControl.Resources>
         <converter:InventoryTypeConvert x:Key="InventoryTypeConvertKey"/>
         <converter:ListViewIndexConvert  x:Key="ListViewIndex"/>
     </UserControl.Resources>
+
     <Grid Width="600">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -23,10 +25,10 @@
         <StackPanel Grid.Row="1">
             <TextBox 
                  FontSize="16"
-                 Text="{Binding InventoryName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                 Text="{Binding InventoryDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                  Style="{StaticResource MaterialDesignOutlinedTextBox}"
                  materialDesign:HintAssist.Hint="Tên phiếu"/>
-            <ListView ItemsSource="{Binding ListDetail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ListView ItemsSource="{Binding ListDetail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -49,16 +51,32 @@
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding ExpectedQuality}">
                             <GridViewColumn.Header>
-                                <TextBlock Text="Expected Quality" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
+                                <TextBlock Text="Quality" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
                             </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="{DynamicResource ACTION}" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Style="{StaticResource style_button_delete}" MinHeight="0" Command="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=DataContext.DeleteDetailCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource ListViewIndex}}">
+                                            <materialDesign:PackIcon Kind="DeleteOutline" Width="19" Height="19"/>
+                                        </Button>
+                                    </StackPanel>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Button Content="Add" Command="{Binding AddCommand}" Margin="10"/>
-            <Button Content="Save" Command="{Binding SaveCommand}" Margin="10"/>
+            <Button Content="Clear" Command="{Binding ClearCommand}" Margin="10"/>
+            <Button Content="Add" Command="{Binding AddDetailCommand}" Margin="10"/>
+            <Button Content="Save" Command="{Binding SaveDetailCommand}" Margin="10"/>
 
         </StackPanel>
     </Grid>

@@ -38,7 +38,7 @@ namespace PCApp.ViewModels.Inventories
             });
             DeleteCommand = new RelayCommand<int>((p) => { return true; }, async (id) =>
             {
-                bool? Result = new MsgBox("Are you sure want to exit application? ", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+                bool? Result = new MsgBox("Are you sure want to detele this inventory? ", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
                 if (Result.Value)
                 {
                     await DeleteAsync(id);

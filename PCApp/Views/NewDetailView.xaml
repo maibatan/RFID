@@ -7,14 +7,16 @@
              mc:Ignorable="d" 
              xmlns:converter="clr-namespace:PCApp.Converters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:inventories="clr-namespace:PCApp.ViewModels.Inventories" 
+             d:DataContext="{d:DesignInstance Type=inventories:NewDetailViewModel}"
              Padding="25" Background="White">
     <UserControl.Resources>
         <converter:InventoryTypeConvert x:Key="InventoryTypeConvertKey"/>
     </UserControl.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding NewInventoryViewCommand}" />
+            <i:InvokeCommandAction Command="{Binding NewDetailViewCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid Width="600">
@@ -25,104 +27,40 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="{DynamicResource ADD_NEW}" Margin="17 7 7 7" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
         <StackPanel Grid.Row="1">
-            <TextBox 
-                 FontSize="16"
-                 Text="{Binding InventoryName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                 materialDesign:HintAssist.Hint="Tên phiếu"/>
+
+            <StackPanel Orientation="Horizontal"/>
+            <ComboBox materialDesign:HintAssist.Hint="Asset Item"
+                              HorizontalAlignment="Left"
+                              IsEnabled="{Binding AssetItemEnable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              FontSize="16"
+                              Width="400"
+                              ItemsSource="{Binding ListAssetItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectedAssetItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Style="{StaticResource MaterialDesignOutlinedComboBox}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} / {1}">
+                                    <Binding Path="Code"/>
+                                    <Binding Path="DisplayName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <TextBox 
                  FontSize="16"
                  Margin="0 15 0 0"
-                 Text="{Binding InventoryDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                 Text="{Binding Quality ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                  Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                 materialDesign:HintAssist.Hint="Mô tả"/>
-            <StackPanel Orientation="Horizontal">
-                <Label Margin="10" FontWeight="Bold" FontSize="16">Chọn kiểu kiêm kê</Label>
-                <RadioButton Margin="10" FontSize="16" Content="Phòng ban" Name="cbbDepartment" IsChecked="{Binding InventoryType,Converter={StaticResource ResourceKey=InventoryTypeConvertKey}, ConverterParameter=Department}"/>
-                <RadioButton Margin="10" FontSize="16" Content="Bộ phận" Name="cbbPart" IsChecked="{Binding InventoryType,Converter={StaticResource ResourceKey=InventoryTypeConvertKey}, ConverterParameter=Part}"/>
-                <RadioButton Margin="10" FontSize="16" Content="Nhân viên" Name="cbbEmployee" IsChecked="{Binding InventoryType,Converter={StaticResource ResourceKey=InventoryTypeConvertKey}, ConverterParameter=Employee}"/> 
-            </StackPanel>
-            <ComboBox materialDesign:HintAssist.Hint="Phòng ban"
-                              HorizontalAlignment="Left"
-                              IsEnabled="{Binding DepartmentEnable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              FontSize="16"
-                              Width="400"
-                              ItemsSource="{Binding ListDepartment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              SelectedItem="{Binding SelectedDepartment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              Style="{StaticResource MaterialDesignOutlinedComboBox}">
-                <ComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} / {1}">
-                                    <Binding Path="Code"/>
-                                    <Binding Path="DisplayName"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <ComboBox materialDesign:HintAssist.Hint="Bộ phận"
-                              HorizontalAlignment="Left"
-                              IsEnabled="{Binding PartEnable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              FontSize="16"
-                              Width="400"
-                              Margin="0 15 0 0"
-                              ItemsSource="{Binding ListPart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              SelectedItem="{Binding SelectedPart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              Style="{StaticResource MaterialDesignOutlinedComboBox}">
-                <ComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} / {1}">
-                                    <Binding Path="Code"/>
-                                    <Binding Path="DisplayName"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <ComboBox materialDesign:HintAssist.Hint="Nhân viên"
-                              HorizontalAlignment="Left"
-                              IsEnabled="{Binding EmployeeEnable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              FontSize="16"
-                              Width="400"
-                              Margin="0 15 0 0"
-                              ItemsSource="{Binding ListEmployee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              SelectedItem="{Binding SelectedEmployee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              Style="{StaticResource MaterialDesignOutlinedComboBox}">
-                <ComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} / {1}">
-                                    <Binding Path="Code"/>
-                                    <Binding Path="DisplayName"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-
+                 materialDesign:HintAssist.Hint="Quality"/>
         </StackPanel>
 
 
