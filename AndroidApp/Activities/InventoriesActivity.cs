@@ -46,7 +46,6 @@ namespace AndroidApp.Activities
             _adapter = new InventoryAdapter(this, _listInventory,_options);
             _layoutManager = new LinearLayoutManager(this);
             _recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView_inventories);
-            _recyclerView.HasFixedSize = true;        
             _recyclerView.SetLayoutManager(_layoutManager);     
             _recyclerView.SetAdapter(_adapter);
         }

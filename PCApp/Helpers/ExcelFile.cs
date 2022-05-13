@@ -17,8 +17,8 @@ namespace PCApp.Helpers
             }
             using var package = new ExcelPackage(file);
             var ws = package.Workbook.Worksheets.Add("Inventory");
-            ws.Cells[1,1].LoadFromText( inventory.Description);
-            ws.Cells[2, 1].LoadFromText(inventory.CreatedDate.ToShortDateString());
+            ws.Cells[1,1].Value = inventory.Description;
+            ws.Cells[2, 1].Value= inventory.CreatedDate.ToString("hh:mm tt MM/dd/yyyy");
             ws.Cells[3, 1].Value = "No";
             ws.Cells[3, 2].Value = "Item Name";
             ws.Cells[3, 3].Value = "Expected";

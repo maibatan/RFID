@@ -1,18 +1,23 @@
 ﻿using Android.Content;
+using Android.Graphics;
 using Android.Views;
 using Android.Widget;
 using AndroidX.RecyclerView.Widget;
 using SharedLibrary;
 using System.Collections.Generic;
+
+
 namespace AndroidApp.Adapters
 {
     
     public class ScanDetailAdapter : RecyclerView.Adapter
     {
+        public bool IsScan { get; set; }
         private readonly List<Detail> _listDetail;
         public ScanDetailAdapter(List<Detail> listDetail)
         {
             _listDetail = listDetail;
+            IsScan = false;
         }
 
         public override int ItemCount
@@ -28,6 +33,22 @@ namespace AndroidApp.Adapters
             ScanDetailViewHolder detailViewHolder = holder as ScanDetailViewHolder;
             detailViewHolder.PhysicalQualityTextView.Text = _listDetail[position].PhysicalQuality.ToString();
             detailViewHolder.ExpectedQualityTextView.Text = _listDetail[position].ExpectedQuality.ToString();
+            if(IsScan)
+            {
+                if (_listDetail[position].PhysicalQuality < _listDetail[position].ExpectedQuality)
+                {
+                    detailViewHolder.ItemView.SetBackgroundColor(Color.Red);
+                }
+                if (_listDetail[position].PhysicalQuality == _listDetail[position].ExpectedQuality)
+                {
+                    detailViewHolder.ItemView.SetBackgroundColor(Color.Green);
+                }
+                if (_listDetail[position].PhysicalQuality > _listDetail[position].ExpectedQuality)
+                {
+                    detailViewHolder.ItemView.SetBackgroundColor(Color.Yellow);
+                }
+            }
+            
             if (_listDetail[position].AssetItemNavigation == null) return;
             detailViewHolder.AssetNameTextView.Text = _listDetail[position].AssetItemNavigation.DisplayName;
                 

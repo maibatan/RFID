@@ -64,8 +64,8 @@
 
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Button Content="Hủy" Command="{Binding CloseCommand}" Margin="10"/>
-            <Button Content="Lưu" Command="{Binding SaveCommand}" Margin="10"/>
+            <Button Content="Cancel" Command="{Binding CloseCommand}" Margin="10"/>
+            <Button Content="Save" Command="{Binding SaveCommand}" Margin="10"/>
 
         </StackPanel>
     </Grid>

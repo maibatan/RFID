@@ -8,11 +8,13 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintTop_toTopOf="parent"
+    android:background="@color/material_grey_100"
     tools:ignore="HardcodedText,HardcodedSize,HardcodedColor" >
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_physical_detail"
         android:layout_width="match_parent"
-        android:layout_height="575dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="50dp"
     />
     <Button
         android:id="@+id/btn_scan"

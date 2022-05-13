@@ -52,7 +52,6 @@ namespace AndroidApp.Activities
         private void OnBindView()
         {
             _recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView_inventory_details);
-            _recyclerView.HasFixedSize = true;
             _layoutManager = new LinearLayoutManager(this);
             _recyclerView.SetLayoutManager(_layoutManager);
             _adapter = new DetailAdapter(_listDetail);

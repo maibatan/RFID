@@ -212,11 +212,6 @@
     <AndroidResource Include="Resources\drawable\ic_baseline_insert_chart_outlined_24.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\expected_detail_item.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\edit_text_border.xml">
       <SubType>Designer</SubType>
     </AndroidResource>

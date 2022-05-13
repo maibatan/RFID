@@ -53,7 +53,7 @@ namespace AndroidApp.Activities
         {
             base.OnPause();
             _scanButton.Text = "Start";
-            RFIDService.Stop();
+            //RFIDService.Stop();
         }
         #endregion
         #region Methods
@@ -68,13 +68,17 @@ namespace AndroidApp.Activities
         {
             var result = await GetDataAsync(tagId);    
             _listInstance.Add(result);
-            _recyclerView.SetAdapter(_adapter);
+            _adapter.NotifyDataSetChanged();
         }
         [Obsolete]
         private void Scan(object sender, EventArgs e)
         {
-            
-            RFIDService.StartScan(this);
+            for (int i = 0; i < 10; i++)
+            {
+                AddTagIdToList("1111111"+i);
+            }
+           
+            //RFIDService.StartScan(this);
             if (RFIDService.IsRun)
             {
                 Toast.MakeText(this, "Start scan", ToastLength.Long).Show();
@@ -120,8 +124,7 @@ namespace AndroidApp.Activities
             _departmentOptions.MenuItemClick += ChooseDepartment;
             _adapter = new InstanceAdapter(this, _listInstance, _assetItemOptions, _departmentOptions);
             _layoutManager = new LinearLayoutManager(this);
-            _recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView_physical_detail);
-            _recyclerView.HasFixedSize = true;           
+            _recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView_physical_detail);        
             _recyclerView.SetLayoutManager(_layoutManager);           
             _recyclerView.SetAdapter(_adapter);
             _scanButton = FindViewById<Button>(Resource.Id.btn_scan);
@@ -134,14 +137,14 @@ namespace AndroidApp.Activities
         {
             _listInstance[position].DepartmentId = e.Item.ItemId;
             _listInstance[position].DepartmentNavigation = _listDepartment.Find(x => x.Id == e.Item.ItemId);
-            _recyclerView.SetAdapter(_adapter);
+            _adapter.NotifyItemChanged(position);
         }
 
         private void ChooseAssetItem(int position, PopupMenu.MenuItemClickEventArgs e)
         {
             _listInstance[position].AssetItemId = e.Item.ItemId;
             _listInstance[position].AssetItemNavigation = _listAssetItem.Find(x => x.Id == e.Item.ItemId);
-            _recyclerView.SetAdapter(_adapter);
+            _adapter.NotifyItemChanged(position);
         }
 
         #region Connect API

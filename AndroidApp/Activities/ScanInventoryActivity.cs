@@ -54,7 +54,7 @@ namespace AndroidApp.Activities
         {
             base.OnPause();
             _scanButton.Text = "Start";
-            RFIDService.Stop();
+            //RFIDService.Stop();
         }
         #endregion
         #region Methods
@@ -73,13 +73,17 @@ namespace AndroidApp.Activities
             var detailIndex = _listDetail.FindIndex(x => x.AssetItemId == readInstance.AssetItemId);
             if (detailIndex < 0) return;
             _listDetail[detailIndex].PhysicalQuality += 1;
-            _recyclerView.SetAdapter(_adapter);
+            _adapter.NotifyItemChanged(detailIndex);
         }
         [Obsolete]
         private void Scan(object sender, EventArgs e)
         {
-            
-            RFIDService.StartScan(this);
+            for (int i = 0; i < 20; i++)
+            {
+                AddTagIdToList("1111111" + i);
+            }
+            _adapter.IsScan = true;
+            //RFIDService.StartScan(this);
             if (RFIDService.IsRun)
             {
                 Toast.MakeText(this, "Start scan", ToastLength.Long).Show();
@@ -123,7 +127,6 @@ namespace AndroidApp.Activities
         {
 
             _recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView_physical_detail);
-            _recyclerView.HasFixedSize = true;
             _layoutManager = new LinearLayoutManager(this);
             _recyclerView.SetLayoutManager(_layoutManager);
             _adapter = new ScanDetailAdapter(_listDetail);

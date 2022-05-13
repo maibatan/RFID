@@ -76,7 +76,7 @@ namespace AndroidApp.Services
         public static void Stop()
         {
             _loopFlag = false;
-            _mReader.StopInventory();           
+            //_mReader.StopInventory();           
         }
         [Obsolete]
         private static void ContinuousRead(ITagIdHandler tagIdHandler)
