@@ -12,7 +12,7 @@
              Padding="25" Background="White">
     <UserControl.Resources>
         <converter:InventoryTypeConvert x:Key="InventoryTypeConvertKey"/>
-        <converter:ListViewIndexConvert  x:Key="ListViewIndex"/>
+        <converter:ListViewIndexConvert x:Key="ListViewIndex"/>
     </UserControl.Resources>
 
     <Grid Width="600">
@@ -41,7 +41,7 @@
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource ListViewIndex}}">
                             <GridViewColumn.Header>
-                                <TextBlock Text="NO" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
+                                <TextBlock Text="No" Margin="10 0 0 0" FontWeight="SemiBold" Foreground="Black"/>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding AssetItemNavigation.DisplayName}">
@@ -61,11 +61,10 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Style="{StaticResource style_button_delete}" MinHeight="0" Command="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=DataContext.DeleteDetailCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource ListViewIndex}}">
+                                        <Button Style="{StaticResource style_button_delete}" MinHeight="0" Command="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=DataContext.DeleteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource ListViewIndex}}">
                                             <materialDesign:PackIcon Kind="DeleteOutline" Width="19" Height="19"/>
                                         </Button>
                                     </StackPanel>
-
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -75,8 +74,8 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Button Content="Clear" Command="{Binding ClearCommand}" Margin="10"/>
-            <Button Content="Add" Command="{Binding AddDetailCommand}" Margin="10"/>
-            <Button Content="Save" Command="{Binding SaveDetailCommand}" Margin="10"/>
+            <Button Content="Add" Command="{Binding AddCommand}" Margin="10"/>
+            <Button Content="Save" Command="{Binding SaveCommand}" Margin="10"/>
 
         </StackPanel>
     </Grid>

@@ -14,7 +14,6 @@
     <DataTemplate DataType="{x:Type inventoryViewModel:DetailViewModel}">
         <inventoryView:DetailView/>
     </DataTemplate>
-
     <DataTemplate DataType="{x:Type inventoryViewModel:NewDetailViewModel}">
         <inventoryView:NewDetailView/>
     </DataTemplate>

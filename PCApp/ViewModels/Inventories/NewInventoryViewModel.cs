@@ -3,9 +3,7 @@ using PCApp.Helpers;
 using PCApp.Popup;
 using SharedLibrary;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,21 +17,16 @@ namespace PCApp.ViewModels.Inventories
     {
         private ObservableCollection<Detail> _listDetail;
         public ObservableCollection<Detail> ListDetail { get => _listDetail; set { _listDetail = value; OnPropertyChanged(); } }
-        private int _id;
-        public int Id { get => _id; set { _id = value; OnPropertyChanged(); } }
         private string _inventoryDescription;
         public string InventoryDescription { get => _inventoryDescription; set { _inventoryDescription = value; OnPropertyChanged(); } }
-        private Visibility _ProgressBarEnable = Visibility.Hidden;
-        public Visibility ProgressBarEnable { get { return _ProgressBarEnable; } set { _ProgressBarEnable = value; OnPropertyChanged(); } }
-        public ICommand AddDetailCommand { get; set; }
-        public ICommand DeleteDetailCommand { get; set; }
-        public ICommand SaveDetailCommand { get; set; }
+        public ICommand AddCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
         public ICommand ClearCommand { get; set; }
-        public ICommand NewInventoryViewCommand { get; set; }
         public NewInventoryViewModel()
         {
             _listDetail = new ObservableCollection<Detail>();
-            SaveDetailCommand = new RelayCommand<object>((p) =>{return true;}, async (p) =>
+            SaveCommand = new RelayCommand<object>((p) =>{return true;}, async (p) =>
             {
                 if (string.IsNullOrWhiteSpace(_inventoryDescription) == false)
                 {
@@ -42,27 +35,41 @@ namespace PCApp.ViewModels.Inventories
                         int id = await PostInventoryAsync(_inventoryDescription);
                         if (id == 0)
                         {
-                            new MsgBox("Can't create inventory ", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                            _ = new MsgBox("Can't create inventory ", MessageType.Error, MessageButtons.Ok).ShowDialog();
                             return;
                         }
                         await PostDetailsAsync(id, _listDetail);
                         Clear();
                         (Application.Current.MainWindow.DataContext as MainViewModel).CurrentView = new InventoryViewModel();
                     }
-                    else new MsgBox("Must have details ", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+                    else
+                    {
+                        _ = new MsgBox("Must have details ", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+                    }
                 }
-                else new MsgBox("Must have decription ", MessageType.Warning, MessageButtons.Ok).ShowDialog();
-                
-            });
-            AddDetailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                (Application.Current.MainWindow.DataContext as MainViewModel).OpenDiaLog(new NewDetailViewModel(ListDetail));
+                else
+                {
+                    _ = new MsgBox("Must have decription ", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+                }
             });
             ClearCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 Clear();
             });
-           
+            DeleteCommand = new RelayCommand<object>((p) => { return true; }, (i)=>
+            {
+                bool? Result = new MsgBox("Are you sure want to detele this detail? ", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+                if (Result.Value)
+                {
+                    ListDetail.RemoveAt((int)i-1);
+                }
+            });
+            AddCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                (Application.Current.MainWindow.DataContext as MainViewModel).OpenDiaLog(new NewDetailViewModel(_listDetail));
+            });
+            
+
         }
         private void Clear()
         {
