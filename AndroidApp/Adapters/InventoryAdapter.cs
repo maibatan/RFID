@@ -33,7 +33,7 @@ namespace AndroidApp.Adapters
         {
             InventoryViewHolder reportViewHolder = holder as InventoryViewHolder;
             reportViewHolder.LabelTextView.Text = _listInventory[position].Description;
-            reportViewHolder.DateTextView.Text = _listInventory[position].CreatedDate.ToShortDateString();
+            reportViewHolder.DateTextView.Text = _listInventory[position].CreatedDate.ToString("hh:mm tt MM/dd/yyyy");
             reportViewHolder.StatusTextView.Text = _listInventory[position].Status ? "Checked" : "Not checked";
             reportViewHolder.OptionsImageButton.Click += (object sender, EventArgs e) =>
             {
