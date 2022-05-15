@@ -35,7 +35,7 @@ namespace PCApp.Helpers
                 ws.Cells[i + startRow + 3, startCol +1].Value =details[i].AssetItemNavigation.DisplayName;
                 ws.Cells[i + startRow + 3, startCol +2].Value= details[i].ExpectedQuality;
                 ws.Cells[i + startRow + 3, startCol +3].Value = details[i].PhysicalQuality;
-                ws.Cells[i + startRow + 3, startCol +4].Value = (int)ws.Cells[i + 4, 3].Value - (int)ws.Cells[i + 4, 4].Value;
+                ws.Cells[i + startRow + 3, startCol +4].Value = (int)ws.Cells[i + startRow + 3, startCol +2].Value - (int)ws.Cells[i + startRow + 3, startCol +3].Value;
             }
           
             await package.SaveAsync();
