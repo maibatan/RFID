@@ -54,7 +54,7 @@ namespace AndroidApp.Activities
         {
             base.OnPause();
             _scanButton.Text = "Start";
-            //RFIDService.Stop();
+            RFIDService.Stop();
         }
         #endregion
         #region Methods
@@ -78,12 +78,8 @@ namespace AndroidApp.Activities
         [Obsolete]
         private void Scan(object sender, EventArgs e)
         {
-            for (int i = 0; i < 20; i++)
-            {
-                AddTagIdToList("1111111" + i);
-            }
             _adapter.IsScan = true;
-            //RFIDService.StartScan(this);
+            RFIDService.StartScan(this);
             if (RFIDService.IsRun)
             {
                 Toast.MakeText(this, "Start scan", ToastLength.Long).Show();

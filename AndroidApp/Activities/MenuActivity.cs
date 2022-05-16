@@ -15,10 +15,10 @@ namespace AndroidApp.Activities
         private ImageView _configurationButton;
 
         [Obsolete]
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            //await RFIDService.InitializeReader();
+            await RFIDService.InitializeReader();
             SetContentView(Resource.Layout.activity_menu);
             OnBindView();
 
